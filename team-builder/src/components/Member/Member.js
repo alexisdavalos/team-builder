@@ -8,7 +8,7 @@ import {
 const NewCard = styled(Card)`
   margin: 1%;
   width:30%;
-  background-color:black !important;
+  background-color: #007a80ba!important;
   color:white;
 
 `
@@ -22,7 +22,7 @@ const Member = props =>{
                 <CardSubtitle>{`Role: ${item.role}`}</CardSubtitle>
                 <CardSubtitle>{`Email: ${item.email}`}</CardSubtitle>
             </CardBody>
-            <Button onClick={() => props.editMember(item)}>Edit</Button>
+            <Button onClick={() => props.editMode(item)}>Edit</Button>
         </NewCard>
        
 

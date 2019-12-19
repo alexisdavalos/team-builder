@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-const MemberForm = ({addMember, memberToEdit}) =>{
+const MemberForm = ({addMember, memberToEdit, editMember}) =>{
 
     const [member, setMember] = useState({name:'',email:'', role:''})
 
@@ -12,6 +12,8 @@ const MemberForm = ({addMember, memberToEdit}) =>{
       console.log(`The Member Added is: ${member}`)
       if(memberToEdit === null){
         addMember(member);
+      }else{
+        editMember(member);
       }
       setMember({name:'', email:'',role:''});
     }

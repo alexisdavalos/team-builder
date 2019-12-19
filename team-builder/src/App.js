@@ -43,17 +43,38 @@ function App() {
   ]);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [isEditing, setEditMode] = useState(false);
+  //Function that adds new Member Cards
   const addMember = member =>{
-      const newMember = {
+      const newMember = { //creates new member
         name: member.name,
         email: member.email,
         role: member.role
       };
-      setMembers([...members, newMember]);
+      setMembers([...members, newMember]); //adds new member to members array
   }
-  const editMember = item =>{
-    setMemberToEdit(item);
-    setEditMode(true);
+  //Function that edits members
+  const editMember = member =>{
+    const memberIndex = members.findIndex(obj => obj.name === member.name) //find the index of the members data where the obj.name matches the member being edited
+    // console.log('The is the INDEX OF THE MEMBER BEING EDITED', members[memberIndex])
+    // const newMembers = [...members.splice(memberIndex, 1)];
+    // console.log('The is the NEW MEMBERS ARRAY', newMembers)
+    // console.log('The Item BEFORE Being Edited After Click:', members[memberIndex])
+    members[memberIndex] = {
+      name: member.name,
+      email: member.email,
+      role: member.role
+    };
+    setMembers([...members, members[memberIndex]]) //How to manipulate
+    console.log('The Item After Being Edited After Click:', members[memberIndex])
+
+    setEditMode(false);
+  }
+  //function that sets edit mode
+  const editMode = member =>{
+    setMemberToEdit(member); //selects which member to edit
+    setEditMode(true); //sets edit mode to true
+    const memberIndex = members.findIndex(obj => obj.name === member.name)
+    console.log(`This is the index member ${member.name}`,members[memberIndex]);
   }
   console.log(`Edit Mode: ${isEditing} \nWe will be editing:`, memberToEdit);
   if(isEditing === false){
@@ -61,26 +82,26 @@ function App() {
       <Wrapper>
           <h1>Add A Member</h1>
           <FormWrapper>
-            <MemberForm memberToEdit={memberToEdit} addMember={addMember}/>
+            <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
             </FormWrapper>
          <h2>The Team Roster:</h2>
           <CardWrapper>
-            <Member editMember={editMember} members={members}/>
+            <Member editMode={editMode} members={members}/>
           </CardWrapper>
       </Wrapper>
     );
   }else{
     return (
-      <Wrapper>
-          <h1>Edit A Member</h1>
-          <FormWrapper>
-            <MemberForm memberToEdit={memberToEdit} addMember={addMember}/>
-            </FormWrapper>
-         <h2>The Team Roster:</h2>
-          <CardWrapper>
-            <Member editMember={editMember} members={members}/>
-          </CardWrapper>
-      </Wrapper>
+        <Wrapper>
+        <h1>Edit A Member</h1>
+        <FormWrapper>
+          <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
+          </FormWrapper>
+      <h2>The Team Roster:</h2>
+        <CardWrapper>
+          <Member editMode={editMode} members={members}/>
+        </CardWrapper>
+    </Wrapper>
     );
   }
   
