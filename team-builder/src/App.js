@@ -79,12 +79,11 @@ function App() {
     // const newMembers = [...members.splice(memberIndex, 1)];
     // console.log('The is the NEW MEMBERS ARRAY', newMembers)
     // console.log('The Item BEFORE Being Edited After Click:', members[memberIndex])
-    setMembers([...members, member]) //How to manipulate
-    console.log('The Item After Being Edited After Click:', members[memberIndex])
-    console.log('The Members Object Edited After Click:', members)
+    setMembers([...members]) //How to manipulate
     setEditMode(false);
     setMemberToEdit(null);
   }
+  console.log('The Members Object Edited After Click:', members)
  
   //function that sets edit mode
   const editMode = member =>{
