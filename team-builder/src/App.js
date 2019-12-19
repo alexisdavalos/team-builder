@@ -1,14 +1,26 @@
 import React, {useState} from 'react';
 import './App.css';
 import MemberForm from './components/MemberForm/MemberForm';
+import Member from './components/Member/Member';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  padding:5%;
+  margin:5%;
   display:flex;
   justify-content:center;
   align-items: center;
   flex-direction: column;
+`
+const CardWrapper = styled.div`
+  margin:2%;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  width:100%;
+`
+const FormWrapper = styled.div`
+  margin:3%;
+
 `
 
 function App() {
@@ -16,22 +28,38 @@ function App() {
     {
       name: 'Alexis',
       email: 'alexisdavalos.tech@gmail.com',
-      role: 'Software Engineer: React'
+      role: 'Software Engineer'
+    },
+    {
+      name: 'Alexis',
+      email: 'alexisdavalos.tech@gmail.com',
+      role: 'Software Engineer'
+    },
+    {
+      name: 'Alexis',
+      email: 'alexisdavalos.tech@gmail.com',
+      role: 'Software Engineer'
     }
-  ])
-  const addMember = members =>{
+  ]);
+  const addMember = member =>{
       const newMember = {
-        name: members.name,
-        email: members.email,
-        role: members.role
+        name: member.name,
+        email: member.email,
+        role: member.role
       };
       setMembers([...members, newMember]);
   }
   // console.log('This is the member State in App.js', member);
   return (
     <Wrapper>
-        <h1>Team Roster</h1>
-       <MemberForm addMember={addMember} members={members} setMembers={setMembers}/>
+        <h1>Add A Member</h1>
+        <FormWrapper>
+          <MemberForm addMember={addMember}/>
+          </FormWrapper>
+       <h2>The Team Roster:</h2>
+        <CardWrapper>
+          <Member members={members}/>
+        </CardWrapper>
     </Wrapper>
   );
 }
