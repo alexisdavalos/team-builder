@@ -2,18 +2,18 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-const MemberForm = ({addMember, memberToEdit, editMember}) =>{
+const MemberForm = ({addMember, memberToEdit, editMember, buttonText}) =>{
 
     const [member, setMember] = useState({name:'',email:'', role:''})
-
+    console.log(`This is the state of member in MemberForm.js`, member)
     const submitForm = e =>{
       e.preventDefault();
       // (!member.name || !member.email || !member.role) ? alert('The Form Must Not Be Empty') : addMember(member);
-      console.log(`The Member Added is: ${member}`)
+      // console.log(`The Member Added is: ${member}`)
       if(memberToEdit === null){
         addMember(member);
       }else{
-        editMember(member);
+        editMember({member, setMember});
       }
       setMember({name:'', email:'',role:''});
     }
@@ -55,7 +55,7 @@ const MemberForm = ({addMember, memberToEdit, editMember}) =>{
           onChange={handleChanges}
           value={member.role}
         />
-        <Button type='submit'>Add Member</Button>
+      <Button type='submit'>{buttonText}</Button>
     </Form>
     )
 

@@ -54,7 +54,6 @@ function App() {
       item.name.toLowerCase().includes(query.toLowerCase())
     );
     setSearchResults(results);
-
   },[query])
   console.log(`The Search Results Array`, searchResults);
   console.log(`The Members Array`, members);
@@ -73,22 +72,20 @@ function App() {
       setMembers([...members, newMember]); //adds new member to members array
   }
   //Function that edits members
-  const editMember = member =>{
+  const editMember = ({member, setMember}) =>{
     const memberIndex = members.findIndex(obj => obj.name === member.name) //find the index of the members data where the obj.name matches the member being edited
-    // console.log('The is the INDEX OF THE MEMBER BEING EDITED', members[memberIndex])
+    console.log('The is the INDEX of the Item Being Edited', memberIndex)
+    console.log('The is the Member BEFORE BEING EDITED', member)
     // const newMembers = [...members.splice(memberIndex, 1)];
     // console.log('The is the NEW MEMBERS ARRAY', newMembers)
     // console.log('The Item BEFORE Being Edited After Click:', members[memberIndex])
-    members[memberIndex] = {
-      name: member.name,
-      email: member.email,
-      role: member.role
-    };
-    setMembers([...members, members[memberIndex]]) //How to manipulate
+    setMembers([...members, member]) //How to manipulate
     console.log('The Item After Being Edited After Click:', members[memberIndex])
-
+    console.log('The Members Object Edited After Click:', members)
     setEditMode(false);
+    setMemberToEdit(null);
   }
+ 
   //function that sets edit mode
   const editMode = member =>{
     setMemberToEdit(member); //selects which member to edit
@@ -102,7 +99,7 @@ function App() {
       <Wrapper>
           <h1>Add A Member</h1>
           <FormWrapper>
-            <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
+            <MemberForm buttonText='Add Member' editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
             <Label htmlFor="name">Search:</Label>
             <Input
               id="name"
@@ -124,11 +121,11 @@ function App() {
         <Wrapper>
         <h1>Edit A Member <Badge color="danger">Mode</Badge></h1>
         <FormWrapper>
-          <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
+          <MemberForm buttonText='Edit Member' editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
           </FormWrapper>
       <h2>The Team Roster:</h2>
         <CardWrapper>
-          <Member editMode={editMode} members={members} searchResults={searchResults}/>
+          <Member  editMode={editMode} members={members} searchResults={searchResults}/>
         </CardWrapper>
     </Wrapper>
     );
