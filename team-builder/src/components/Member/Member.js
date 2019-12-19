@@ -14,9 +14,10 @@ const NewCard = styled(Card)`
 
 `
 const Member = props =>{
+  console.log(`Props inside of Member.js`, props)
     return(
        <>
-      {props.members.map(item => (
+      {props.searchResults.map(item => (
         <NewCard key={Math.random()}>
             <CardBody>
                 <CardTitle>{`Name: ${item.name}`}</CardTitle>

@@ -3,7 +3,7 @@ import './App.css';
 import MemberForm from './components/MemberForm/MemberForm';
 import Member from './components/Member/Member';
 import styled from 'styled-components';
-import {Badge} from 'reactstrap';
+import {Badge, Input, Label} from 'reactstrap';
 
 const Wrapper = styled.div`
   margin:5%;
@@ -44,7 +44,8 @@ function App() {
   ]);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [isEditing, setEditMode] = useState(false);
-  const [query, setQuery] = useState(""); 
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   //useEffect to watch changes in members
   // console.log(members);
   // console.log(members.filter(item => item.name == 'Alexis Davalos'))
@@ -52,10 +53,11 @@ function App() {
     const results = members.filter(item =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
-    setMembers(results);
+    setSearchResults(results);
 
   },[query])
-
+  console.log(`The Search Results Array`, searchResults);
+  console.log(`The Members Array`, members);
   //Handle Changes in search form
   const changeHandler = e => {
     setQuery(e.target.value);
@@ -101,19 +103,19 @@ function App() {
           <h1>Add A Member</h1>
           <FormWrapper>
             <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
-            </FormWrapper>
-            <label htmlFor="name">Search:</label>
-            <input
+            <Label htmlFor="name">Search:</Label>
+            <Input
               id="name"
               type="text"
               name="textfield"
-              placeholder="Search"
+              placeholder="Search By Name"
               value={query}
               onChange={changeHandler}
             />
+            </FormWrapper>
          <h2>The Team Roster:</h2>
           <CardWrapper>
-            <Member editMode={editMode} members={members}/>
+            <Member editMode={editMode} members={members} searchResults={searchResults}/>
           </CardWrapper>
       </Wrapper>
     );
@@ -126,7 +128,7 @@ function App() {
           </FormWrapper>
       <h2>The Team Roster:</h2>
         <CardWrapper>
-          <Member editMode={editMode} members={members}/>
+          <Member editMode={editMode} members={members} searchResults={searchResults}/>
         </CardWrapper>
     </Wrapper>
     );
