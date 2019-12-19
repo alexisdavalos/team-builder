@@ -26,21 +26,23 @@ const FormWrapper = styled.div`
 function App() {
   const [members, setMembers] = useState([
     {
-      name: 'Alexis',
+      name: 'Alexis Davalos',
       email: 'alexisdavalos.tech@gmail.com',
       role: 'Software Engineer'
     },
     {
-      name: 'Alexis',
-      email: 'alexisdavalos.tech@gmail.com',
-      role: 'Software Engineer'
+      name: 'John Ramos',
+      email: 'johnramos.dev@gmail.com',
+      role: 'Front End Engineer'
     },
     {
-      name: 'Alexis',
-      email: 'alexisdavalos.tech@gmail.com',
-      role: 'Software Engineer'
+      name: 'Oswald Newberg',
+      email: 'OswaldNewberg@gmail.com',
+      role: 'Data Scientist'
     }
   ]);
+  const [memberToEdit, setMemberToEdit] = useState(null);
+  const [isEditing, setEditMode] = useState(false);
   const addMember = member =>{
       const newMember = {
         name: member.name,
@@ -49,19 +51,39 @@ function App() {
       };
       setMembers([...members, newMember]);
   }
-  // console.log('This is the member State in App.js', member);
-  return (
-    <Wrapper>
-        <h1>Add A Member</h1>
-        <FormWrapper>
-          <MemberForm addMember={addMember}/>
-          </FormWrapper>
-       <h2>The Team Roster:</h2>
-        <CardWrapper>
-          <Member members={members}/>
-        </CardWrapper>
-    </Wrapper>
-  );
+  const editMember = item =>{
+    setMemberToEdit(item);
+    setEditMode(true);
+  }
+  console.log(`Edit Mode: ${isEditing} \nWe will be editing:`, memberToEdit);
+  if(isEditing === false){
+    return (
+      <Wrapper>
+          <h1>Add A Member</h1>
+          <FormWrapper>
+            <MemberForm memberToEdit={memberToEdit} addMember={addMember}/>
+            </FormWrapper>
+         <h2>The Team Roster:</h2>
+          <CardWrapper>
+            <Member editMember={editMember} members={members}/>
+          </CardWrapper>
+      </Wrapper>
+    );
+  }else{
+    return (
+      <Wrapper>
+          <h1>Edit A Member</h1>
+          <FormWrapper>
+            <MemberForm memberToEdit={memberToEdit} addMember={addMember}/>
+            </FormWrapper>
+         <h2>The Team Roster:</h2>
+          <CardWrapper>
+            <Member editMember={editMember} members={members}/>
+          </CardWrapper>
+      </Wrapper>
+    );
+  }
+  
 }
 
 export default App;

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-const MemberForm = ({addMember}) =>{
+const MemberForm = ({addMember, memberToEdit}) =>{
 
     const [member, setMember] = useState({name:'',email:'', role:''})
 
@@ -10,7 +10,9 @@ const MemberForm = ({addMember}) =>{
       e.preventDefault();
       // (!member.name || !member.email || !member.role) ? alert('The Form Must Not Be Empty') : addMember(member);
       console.log(`The Member Added is: ${member}`)
-      addMember(member);
+      if(memberToEdit === null){
+        addMember(member);
+      }
       setMember({name:'', email:'',role:''});
     }
 
@@ -20,7 +22,11 @@ const MemberForm = ({addMember}) =>{
       })
     }
     // console.log(`Current Member Name: ${member.name} Email: ${member.email} Role: ${member.role}`);
-    console.log(member)
+   
+    useEffect(() =>{
+      (memberToEdit !== null) ? setMember(memberToEdit) : console.log(`There are no members to Edit. The Member State is: ${memberToEdit}`)
+    },[memberToEdit]) //to Watch end members are being edited
+
     return(
         <Form onSubmit={submitForm}>
         <Label htmlFor='name'>Name</Label>

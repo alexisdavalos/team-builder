@@ -13,7 +13,6 @@ const NewCard = styled(Card)`
 
 `
 const Member = props =>{
-    console.log(props.members);
     return(
        <>
       {props.members.map(item => (
@@ -23,7 +22,7 @@ const Member = props =>{
                 <CardSubtitle>{`Role: ${item.role}`}</CardSubtitle>
                 <CardSubtitle>{`Email: ${item.email}`}</CardSubtitle>
             </CardBody>
-            <Button>Edit</Button>
+            <Button onClick={() => props.editMember(item)}>Edit</Button>
         </NewCard>
        
 
