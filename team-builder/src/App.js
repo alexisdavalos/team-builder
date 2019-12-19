@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import MemberForm from './components/MemberForm/MemberForm';
 import Member from './components/Member/Member';
 import styled from 'styled-components';
+import {Badge} from 'reactstrap';
 
 const Wrapper = styled.div`
   margin:5%;
@@ -43,6 +44,23 @@ function App() {
   ]);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [isEditing, setEditMode] = useState(false);
+  const [query, setQuery] = useState(""); 
+  //useEffect to watch changes in members
+  // console.log(members);
+  // console.log(members.filter(item => item.name == 'Alexis Davalos'))
+  useEffect(() =>{
+    const results = members.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setMembers(results);
+
+  },[query])
+
+  //Handle Changes in search form
+  const changeHandler = e => {
+    setQuery(e.target.value);
+    console.log('The Query Is:', e.target.value)
+  };
   //Function that adds new Member Cards
   const addMember = member =>{
       const newMember = { //creates new member
@@ -84,6 +102,15 @@ function App() {
           <FormWrapper>
             <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
             </FormWrapper>
+            <label htmlFor="name">Search:</label>
+            <input
+              id="name"
+              type="text"
+              name="textfield"
+              placeholder="Search"
+              value={query}
+              onChange={changeHandler}
+            />
          <h2>The Team Roster:</h2>
           <CardWrapper>
             <Member editMode={editMode} members={members}/>
@@ -93,7 +120,7 @@ function App() {
   }else{
     return (
         <Wrapper>
-        <h1>Edit A Member</h1>
+        <h1>Edit A Member <Badge color="danger">Mode</Badge></h1>
         <FormWrapper>
           <MemberForm editMember={editMember} memberToEdit={memberToEdit} addMember={addMember}/>
           </FormWrapper>

@@ -8,7 +8,8 @@ import {
 const NewCard = styled(Card)`
   margin: 1%;
   width:30%;
-  background-color: #007a80ba!important;
+  background-image: linear-gradient(-90deg,#6f42c1,#4253c1)!important;
+  box-shadow: 5px 5px 18px 4px #000000ad;
   color:white;
 
 `
